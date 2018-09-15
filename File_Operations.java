@@ -33,12 +33,22 @@ public class FileOperations {
 
 	}
 
-	public void createFile() {
-//			String fileName = parseCommand.nextToken();
-//			System.out.println(fileName);
-//			Need to figure out how to grab whole line from processCommandLine() in order to have the whole string in this class in order to create the file? 
-	
-			
+	public void createFile(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line, " ");
+		String fileName = parseCommand.nextToken();
+		File f = new File (fileName);
+		
+		try {
+			RandomAccessFile writer = new RandomAccessFile(f, "rw");
+			while(parseCommand.hasMoreTokens()) {
+				writer.writeUTF(parseCommand.nextToken());
+			}
+			writer.close();
+		} catch  (IOException e) {
+			e.printStackTrace();
+		}
+		
+			System.out.println("Created file for " + f.getAbsolutePath() + "\n");
 	}
 
 	public void printFile() {
@@ -47,7 +57,7 @@ public class FileOperations {
 	}
 
 	void printUsage() {
-		System.out.print("?\ncreateFile\nprintFile\nlastModified\nsize\nrename\nmkdir\ndelete\nlist\nquit\n");
+		System.out.print("?\ncreateFile\nprintFile\nlastModified\nsize\nrename\nmkdir\ndelete\nlist\nquit\n\n");
 	}
 
 	private String getNextToken() {
@@ -70,9 +80,11 @@ public class FileOperations {
 	}
 
 	public boolean processCommandLine(String line) {
-		StringTokenizer parseCommand = new StringTokenizer(line);
+		StringTokenizer parseCommand = new StringTokenizer(line, " ");
 		boolean check = true;
 		String command = "";
+		String fullLine = "";
+		
 		
 		if (line == null) {
 			return false;
@@ -84,7 +96,8 @@ public class FileOperations {
 					check = false;
 					break;
 				case "createFile":
-					createFile();
+					fullLine = parseCommand.nextToken("\n");
+					createFile(fullLine);
 					check = true;
 					break;
 				case "printFile":
