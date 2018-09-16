@@ -25,10 +25,14 @@ public class FileOperations {
 		File f = new File (parseCommand.nextToken());
 		
 		if (f.exists()) {
-			
+			String name = parseCommand.nextToken();
+			File g = new File(name);
+			f.renameTo(g);
+			System.out.println("Renaming " + f.getAbsolutePath() + " to " + g.getAbsolutePath());
 		} else {
 			System.out.println("A file with that name has not been created.");
 		}
+		System.out.println("Successful rename \n");
 	}
 
 	public void list(String line) {
@@ -47,7 +51,14 @@ public class FileOperations {
 		File f = new File (parseCommand.nextToken());
 		
 		if (f.exists()) {
-			
+			try {
+				RandomAccessFile ranFile = new RandomAccessFile(f, "rw");
+				long length = ranFile.length();
+				System.out.println("Size for " + f.getAbsolutePath() + " is = " + length + "\n");
+				ranFile.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			System.out.println("A file with that name has not been created.");
 		}
@@ -70,13 +81,12 @@ public class FileOperations {
 
 	public void mkdir(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
-		File f = new File (parseCommand.nextToken());
+		String name = parseCommand.nextToken();
 		
-		if (f.exists()) {
-			
-		} else {
-			System.out.println("A file with that name has not been created.");
-		}
+		File f = new File(name);
+		f.mkdirs();
+		
+		System.out.println("Successful creation of directory: " + f.getAbsolutePath() + "\n");
 	}
 
 	public void createFile(String line) {
