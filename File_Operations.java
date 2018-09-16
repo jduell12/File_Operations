@@ -21,7 +21,7 @@ public class FileOperations {
 				System.out.println("Unsuccessful delete \n");
 			}
 		} else {
-			System.out.println("A file with that name has not been created.");
+			System.out.println("A file with that name has not been created.\n");
 		}
 	}
 
@@ -34,10 +34,10 @@ public class FileOperations {
 			File g = new File(name);
 			f.renameTo(g);
 			System.out.println("Renaming " + f.getAbsolutePath() + " to " + g.getAbsolutePath());
+			System.out.println("Successful rename \n");
 		} else {
-			System.out.println("A file with that name has not been created.");
+			System.out.println("A file with that name has not been created.\n");
 		}
-		System.out.println("Successful rename \n");
 	}
 
 	public void list(String line) {
@@ -52,7 +52,7 @@ public class FileOperations {
 			}
 			System.out.println("\n");
 		} else {
-			System.out.println("A file with that name has not been created.");
+			System.out.println("A file with that name has not been created.\n");
 		}
 	}
 
@@ -70,7 +70,7 @@ public class FileOperations {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("A file with that name has not been created.");
+			System.out.println("A file with that name has not been created. \n");
 		}
 	}
 
@@ -84,7 +84,7 @@ public class FileOperations {
 			Date d = new Date(time);
 			System.out.println(d + "\n");
 		} else {
-			System.out.println("A file with that name has not been created.");
+			System.out.println("A file with that name has not been created. \n");
 		}
 		
 	}
@@ -109,12 +109,12 @@ public class FileOperations {
 			while(parseCommand.hasMoreTokens()) {
 				writer.writeUTF(parseCommand.nextToken() + "\n");
 			}
+			System.out.println("Created file for " + f.getAbsolutePath() + "\n");
 			writer.close();
 		} catch  (IOException e) {
 			e.printStackTrace();
 		}
 		
-			System.out.println("Created file for " + f.getAbsolutePath() + "\n");
 	}
 
 	public void printFile(String line) {
@@ -128,14 +128,14 @@ public class FileOperations {
 				while ((text = reader.readLine()) != null) {
 					System.out.println(text);
 				}
+				System.out.println("Printed file for " + name.getAbsolutePath() + "\n");
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} 
 		} else {
-			System.out.println("A file with that name has not been created.");
+			System.out.println("A file with that name has not been created.\n");
 		}
-		System.out.println("Printed file for " + name.getAbsolutePath() + "\n");
 	}
 
 	void printUsage() {
