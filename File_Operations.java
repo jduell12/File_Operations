@@ -1,5 +1,4 @@
 
-
 import java.io.*;
 import java.util.*;
 
@@ -40,7 +39,12 @@ public class FileOperations {
 		File f = new File (parseCommand.nextToken());
 		
 		if (f.exists()) {
-			
+			System.out.println("Listing files for " + f.getAbsolutePath() + "\n");
+			String [] paths = f.list();
+			for (String path: paths) {
+				System.out.println(path);
+			}
+			System.out.println("\n");
 		} else {
 			System.out.println("A file with that name has not been created.");
 		}
