@@ -9,28 +9,74 @@ public class FileOperations {
 	Scanner scan = null;
 	PrintStream ps = null;
 
-	public void delete() {
-
+	public void delete(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line);
+		File f = new File (parseCommand.nextToken());
+		
+		if (f.exists()) {
+			
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
 	}
 
-	public void rename() {
-
+	public void rename(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line);
+		File f = new File (parseCommand.nextToken());
+		
+		if (f.exists()) {
+			
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
 	}
 
-	public void list() {
-
+	public void list(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line);
+		File f = new File (parseCommand.nextToken());
+		
+		if (f.exists()) {
+			
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
 	}
 
-	public void size() {
-
+	public void size(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line);
+		File f = new File (parseCommand.nextToken());
+		
+		if (f.exists()) {
+			
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
 	}
 
-	public void lastModified() {
-
+	public void lastModified(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line);
+		File f = new File(parseCommand.nextToken());
+		
+		if (f.exists()) {
+			System.out.println("Last modified for " + f.getAbsolutePath());
+			long time = f.lastModified();
+			Date d = new Date(time);
+			System.out.println(d + "\n");
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
+		
 	}
 
-	public void mkdir() {
-
+	public void mkdir(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line);
+		File f = new File (parseCommand.nextToken());
+		
+		if (f.exists()) {
+			
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
 	}
 
 	public void createFile(String line) {
@@ -41,7 +87,7 @@ public class FileOperations {
 		try {
 			RandomAccessFile writer = new RandomAccessFile(f, "rw");
 			while(parseCommand.hasMoreTokens()) {
-				writer.writeUTF(parseCommand.nextToken());
+				writer.writeUTF(parseCommand.nextToken() + "\n");
 			}
 			writer.close();
 		} catch  (IOException e) {
@@ -51,32 +97,29 @@ public class FileOperations {
 			System.out.println("Created file for " + f.getAbsolutePath() + "\n");
 	}
 
-	public void printFile() {
-		String command = parseCommand.nextToken();
+	public void printFile(String line) {
+		StringTokenizer parseCommand = new StringTokenizer(line, " ");
+		File name = new File (parseCommand.nextToken());
 		
+		if (name.exists()) {
+			try {
+				RandomAccessFile reader = new RandomAccessFile (name, "rw");
+				String text = "";
+				while ((text = reader.readLine()) != null) {
+					System.out.println(text);
+				}
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+		} else {
+			System.out.println("A file with that name has not been created.");
+		}
+		System.out.println("Printed file for " + name.getAbsolutePath() + "\n");
 	}
 
 	void printUsage() {
 		System.out.print("?\ncreateFile\nprintFile\nlastModified\nsize\nrename\nmkdir\ndelete\nlist\nquit\n\n");
-	}
-
-	private String getNextToken() {
-		if (parseCommand.hasMoreTokens()) {
-			return parseCommand.nextToken();
-		} else {
-			return null;
-		}
-	}
-
-	private File getFile() {
-		File f = null;
-		String fileName = getNextToken();
-		if (fileName == null) {
-			System.out.println("Missing a File name");
-		} else {
-			f = new File(fileName);
-		}
-		return f;
 	}
 
 	public boolean processCommandLine(String line) {
@@ -84,7 +127,6 @@ public class FileOperations {
 		boolean check = true;
 		String command = "";
 		String fullLine = "";
-		
 		
 		if (line == null) {
 			return false;
@@ -101,31 +143,38 @@ public class FileOperations {
 					check = true;
 					break;
 				case "printFile":
-					printFile();
+					fullLine = parseCommand.nextToken("\n");
+					printFile(fullLine);
 					check = true;
 					break;
 				case "lastModified":
-					lastModified();
+					fullLine = parseCommand.nextToken("\n");
+					lastModified(fullLine);
 					check = true;
 					break;
 				case "size":
-					size();
+					fullLine = parseCommand.nextToken("\n");
+					size(fullLine);
 					check = true;
 					break;
 				case "rename":
-					rename();
+					fullLine = parseCommand.nextToken("\n");
+					rename(fullLine);
 					check = true;
 					break;
 				case "mkdir":
-					mkdir();
+					fullLine = parseCommand.nextToken("\n");
+					mkdir(fullLine);
 					check = true;
 					break;
 				case "delete":
-					delete();
+					fullLine = parseCommand.nextToken("\n");
+					delete(fullLine);
 					check = true;
 					break;
 				case "list":
-					list();
+					fullLine = parseCommand.nextToken("\n");
+					list(fullLine);
 					check = true;
 					break;
 				case "?":
