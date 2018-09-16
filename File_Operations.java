@@ -1,4 +1,5 @@
 
+
 import java.io.*;
 import java.util.*;
 
@@ -8,6 +9,9 @@ public class FileOperations {
 	Scanner scan = null;
 	PrintStream ps = null;
 
+	// the next 9 classes will be the command words needed in the file to use that class
+	
+	//deletes first string following the command from a file
 	public void delete(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
 		File f = new File (parseCommand.nextToken());
@@ -25,6 +29,7 @@ public class FileOperations {
 		}
 	}
 
+	// first string after command is treated as the file that should be renamed and the second string is the new name for the file
 	public void rename(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
 		File f = new File (parseCommand.nextToken());
@@ -40,6 +45,7 @@ public class FileOperations {
 		}
 	}
 
+	//first string after command will be treated as directory for which we want a list of the files it contains
 	public void list(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
 		File f = new File (parseCommand.nextToken());
@@ -56,6 +62,7 @@ public class FileOperations {
 		}
 	}
 
+	//first string after command is the filename we wish to find the size of and prints out the number of bytes the file contains
 	public void size(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
 		File f = new File (parseCommand.nextToken());
@@ -74,6 +81,7 @@ public class FileOperations {
 		}
 	}
 
+	//first string after command will be treated as the filename for which will be printed out the date when the file was last modified 
 	public void lastModified(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
 		File f = new File(parseCommand.nextToken());
@@ -89,6 +97,7 @@ public class FileOperations {
 		
 	}
 
+	//first string following command will be treated as name of directory that should be created
 	public void mkdir(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line);
 		String name = parseCommand.nextToken();
@@ -99,6 +108,7 @@ public class FileOperations {
 		System.out.println("Successful creation of directory: " + f.getAbsolutePath() + "\n");
 	}
 
+	//first string following command will be treated as filename for a new file. Any remaining strings will be written to the file
 	public void createFile(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line, " ");
 		String fileName = parseCommand.nextToken();
@@ -117,6 +127,7 @@ public class FileOperations {
 		
 	}
 
+	//first string following command will be treated as the filename for which we will open and print to the screen
 	public void printFile(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line, " ");
 		File name = new File (parseCommand.nextToken());
@@ -138,10 +149,12 @@ public class FileOperations {
 		}
 	}
 
+	//command is "?"; prints out legal commands available 
 	void printUsage() {
 		System.out.print("?\ncreateFile\nprintFile\nlastModified\nsize\nrename\nmkdir\ndelete\nlist\nquit\n\n");
 	}
 
+	//checks to see if line is null; if there is something in the line it will take the first word and use it as the command word which will call the specific class; continues until there is no more lines in the file 
 	public boolean processCommandLine(String line) {
 		StringTokenizer parseCommand = new StringTokenizer(line, " ");
 		boolean check = true;
@@ -212,6 +225,7 @@ public class FileOperations {
 		}
 	}
 
+	//open file commandFile and calls processCommandLine for each line read and continues to read from the file until processCommandLine returns false
 	void processCommandFile(String commandFile) {
 		try {
 			FileInputStream fi = new FileInputStream(commandFile);
