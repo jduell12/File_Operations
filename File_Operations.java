@@ -13,7 +13,13 @@ public class FileOperations {
 		File f = new File (parseCommand.nextToken());
 		
 		if (f.exists()) {
-			
+			System.out.println("Deleting " + f.getAbsolutePath());
+			f.delete();
+			if (f.exists() == false) {
+				System.out.println("Successful delete \n");
+			} else {
+				System.out.println("Unsuccessful delete \n");
+			}
 		} else {
 			System.out.println("A file with that name has not been created.");
 		}
